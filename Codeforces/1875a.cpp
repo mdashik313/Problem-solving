@@ -18,9 +18,8 @@ bool palindrome(string &s);
 #define nl cout<<"\n"
 #define exit return 0
 
-#define cinn(a) for(int i=0;i<a.size();i++) cin>>a[i]
-#define printa(a) for(int i=0;i<a.size();i++) cout<<a[i]<<" ";nl
-#define lop(size) for(int i=0;i<size;i++)
+#define cinn(a) for(auto& i : a) cin>>i
+#define printa(a) for(auto& i : a) cout<<i<<" ";nl
 
 
 int main()
@@ -29,25 +28,37 @@ int main()
     #ifndef ONLINE_JUDGE
         fileIO
     #endif
+    
+    int t;
+    
+    scanf("%d", &t);
+    while(t--) {
+        solve();
+    }
+    
     return 0;
 }
 
-int number_of_zero_inN(int n){
-    int count=0;
-    while(n!=0){
-        if(n&1) count++;
-        n = n>>1;
-    }
-    return count;
-}
+void solve(){
+    ll a,b,n;
+    cin>>a>>b>>n;
 
-int number_of_one_inN(int n){
-    int count=0;
-    while(n!=0){
-        if(!(n&1)) count++;
-        n = n>>1;
+    vector<ll>V(n);
+    cinn(V);
+
+    sort(V.begin(),V.end());
+
+    unsigned long long res=0;
+    if(b > 1) {
+        res += b-1;
+        b=1;
     }
-    return count;
+
+    for(auto& i:V){
+        res += (b+i <= a ? i : a-1);
+    }
+    cout<<res+1;nl;
+    return;
 }
 
 bool palindrome(string &s){
@@ -59,27 +70,18 @@ bool palindrome(string &s){
     return true;
 }
 
-vector<bool> sieve(long long MAXP){
+vector<long long> sieve(long long MAXP){
     vector<ll> res;
-    vector<bool> mem(MAXP+1,1);
+    vector<bool> mem(MAXP,1);
     mem[1]=0;
-    for(int i=4;i<=MAXP;i+=2){
-        mem[i]=0;
-    }
-    for(int i=3;i<=MAXP;i+=2){
+    //get all prime numbers upto MAXP
+    for(int i=2;i<MAXP;i++){
         if(mem[i]==1){
             res.push_back(i);
-            long long m = i*i;
-            for(int j=i;m<=MAXP;) {
-            	mem[m]=0;
-            	j += 2;
-            	m = i * j;
-            }
+            for(int j=i;j<MAXP;j+=i) {mem[j]=0;}
         }
     }
-    //return res for all primes upto MAXP
-    //return mem for each index, value=1 prime, value=0 non prime upto MEXP
-    return mem;
+    return res;
 }
 
 
