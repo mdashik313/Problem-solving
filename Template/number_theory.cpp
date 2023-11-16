@@ -32,7 +32,29 @@ int main()
     return 0;
 }
 
-int number_of_zero_inN(int n){
+int binary_to_decimal(string s){
+    int res=0,p=s.size()-1;
+    for(int i=0;i<s.size();i++){
+        int digit=s[i]-48;
+        res += (digit*pow(2,p));
+        p--;
+    }
+    return res;
+}
+string decimal_to_binary(int n){
+    if(n==0)
+        return "0";
+    string s="";
+    while(n!=0){
+        bool lsb = n & 1;
+        s += to_string(lsb);
+        n = n >> 1;
+    }
+    reverse(s.begin(),s.end());
+    return s;
+}
+
+int number_of_zeros_inN(int n){
     int count=0;
     while(n!=0){
         if(n&1) count++;
@@ -41,7 +63,7 @@ int number_of_zero_inN(int n){
     return count;
 }
 
-int number_of_one_inN(int n){
+int number_of_ones_inN(int n){
     int count=0;
     while(n!=0){
         if(!(n&1)) count++;
