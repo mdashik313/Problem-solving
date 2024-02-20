@@ -31,6 +31,15 @@ int main()
     #endif
     return 0;
 }
+int sumofdig(int v){
+    int sum=0;
+    while (v != 0) {
+        int digit = v % 10; 
+        sum += digit;         
+        v /= 10;           
+    }
+    return sum;
+}
 
 int binary_to_decimal(string s){
     int res=0,p=s.size()-1;
